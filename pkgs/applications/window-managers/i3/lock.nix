@@ -1,5 +1,5 @@
 { stdenv, lib, fetchFromGitHub, meson, ninja, pkg-config, libxcb, xcbutilkeysyms, xcbutilimage,
-  xcbutilxrm, pam, libX11, libev, cairo, libxkbcommon, libxkbfile }:
+  xcbutilxrm, xcbutil, pam, libX11, libev, cairo, libxkbcommon, libxkbfile }:
 
 stdenv.mkDerivation rec {
   pname = "i3lock";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   };
 
   nativeBuildInputs = [ meson ninja pkg-config ];
-  buildInputs = [ libxcb xcbutilkeysyms xcbutilimage xcbutilxrm
+  buildInputs = [ libxcb xcbutilkeysyms xcbutilimage xcbutilxrm xcbutil
     pam libX11 libev cairo libxkbcommon libxkbfile ];
 
   meta = with lib; {
