@@ -2,7 +2,7 @@
 , meson, ninja, pkg-config, wayland-scanner, scdoc
 , wayland, libxkbcommon, pcre2, json_c, libevdev
 , pango, cairo, libinput, gdk-pixbuf, librsvg
-, wlroots, wayland-protocols, libdrm
+, wlroots, wayland-protocols, libdrm, libGL
 , nixosTests
 # Used by the NixOS module:
 , isNixOS ? false
@@ -58,7 +58,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     wayland libxkbcommon pcre2 json_c libevdev
     pango cairo libinput gdk-pixbuf librsvg
-    wayland-protocols libdrm
+    wayland-protocols libdrm libGL
     (wlroots.override { inherit (finalAttrs) enableXWayland; })
   ] ++ lib.optionals finalAttrs.enableXWayland [
     xorg.xcbutilwm
