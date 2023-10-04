@@ -1,0 +1,26 @@
+diff --git a/cogl/cogl-renderer.c b/cogl/cogl-renderer.c
+index b11c62a0..6302aa19 100644
+--- a/cogl/cogl-renderer.c
++++ b/cogl/cogl-renderer.c
+@@ -607,6 +607,21 @@ _cogl_renderer_choose_driver (CoglRenderer *renderer,
+     {
+       renderer->libgl_module = g_module_open (libgl_name,
+                                               G_MODULE_BIND_LAZY);
++#ifdef LIBGL_PATH
++      if (renderer->libgl_module == NULL)
++        {
++          char pathbuf[sizeof (LIBGL_PATH) + 1 + 1024 + 1];
++          int l = snprintf (pathbuf, sizeof (pathbuf), "%s/%s", LIBGL_PATH, libgl_name);
++          if (l < 0 || l >= sizeof (pathbuf))
++            {
++              // This really shouldn't happen
++              g_critical ("Error prefixing library pathname");
++              exit (1);
++            }
++          renderer->libgl_module = g_module_open (pathbuf,
++                                                  G_MODULE_BIND_LAZY);
++        }
++#endif
+ 
+       if (renderer->libgl_module == NULL)
+         {
